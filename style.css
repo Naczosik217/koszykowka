@@ -1,0 +1,55 @@
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #f0f8ff;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+  }
+
+  canvas {
+    display: block;
+    background-color: #d9f9ff;
+  }
+
+  #punkty {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+
+  #poziom {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffffee;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    border: 2px solid #ffaa00;
+  }
+
+  #wyborPoziomu {
+    font-size: 18px;
+    margin-left: 10px;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: 2px solid #ffa500;
+    background-color: #fff3d1;
+    cursor: pointer;
+  }
+
+  #wyborPoziomu:hover {
+    background-color: #ffe6a1;
+  }
+</style>

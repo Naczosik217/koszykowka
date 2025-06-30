@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Animacje z piłką i koszem 🏀</title>
+  <style>
+    body {
+      background-color: #f0f8ff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff6600;
+      margin-top: 60px;
+    }
+
+    .powrot {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: black;
+      padding: 10px 15px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      z-index: 1000;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+      transition: background-color 0.3s;
+    }
+
+    .powrot:hover {
+      background-color: #ffaa00;
+    }
+
+    .koszAnimacja {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      margin-top: 60px;
+      overflow: hidden;
+    }
+
+    .kosz {
+      position: absolute;
+      left: 720px;
+      top: 150px;
+      width: 100px;
+      height: 10px;
+      background-color: red;
+      border-radius: 5px;
+    }
+
+    .siatka {
+      position: absolute;
+      left: 740px;
+      top: 160px;
+      width: 60px;
+      height: 60px;
+      background: repeating-linear-gradient(
+        45deg,
+        white,
+        white 2px,
+        transparent 2px,
+        transparent 6px
+      );
+      border-bottom: 2px solid gray;
+    }
+
+    .pilka {
+      position: absolute;
+      left: 60px;
+      bottom: 0;
+      width: 60px;
+      height: 60px;
+      background-color: orange;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 4px #c55a00;
+      animation: rzutDoKosza 2s ease-in-out infinite;
+    }
+
+    @keyframes rzutDoKosza {
+      0% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(660px, -320px); /* lot do kosza */
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="powrot">⬅️ Wróć na stronę główną</a>
+
+  <h1>🏀 Animacja rzutu do kosza</h1>
+
+  <div class="koszAnimacja">
+    <div class="kosz"></div>
+    <div class="siatka"></div>
+    <div class="pilka"></div>
+  </div>
+
+</body>
+</html>

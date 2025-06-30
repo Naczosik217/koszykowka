@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Moja Strona o Koszykówce</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: orange;
+      margin-top: 30px;
+    }
+
+    img {
+      margin: 20px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #ffaa00;
+    }
+
+    a {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      width: 260px;
+      background-color: #ffcc00;
+      color: black;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+
+    a:hover {
+      background-color: #ffaa00;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li::before {
+      content: "📌 ";
+    }
+
+    footer {
+      margin-top: 50px;
+      background-color: #ddd;
+      padding: 15px;
+      font-size: 14px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Witaj na mojej stronie o koszykówce!</h1>
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png" alt="Piłka do koszykówki" width="200">
+
+  <p>Koszykówka to moja ulubiona dyscyplina sportu!</p>
+
+  <h2>Ciekawostki o koszykówce 🏀</h2>
+  <ul>
+    <li>Koszykówka została wymyślona w 1891 roku przez Jamesa Naismitha.</li>
+    <li>W meczu grają dwie drużyny po 5 osób.</li>
+    <li>Najlepsza liga koszykarska na świecie to NBA (w USA).</li>
+    <li>Najwyższy zawodnik NBA miał aż 231 cm wzrostu!</li>
+    <li>Piłka do koszykówki waży około 600 gramów.</li>
+  </ul>
+
+  <button onclick="zmienTlo()">Zmień kolor tła</button>
+
+  <!-- Linki do podstron -->
+  <a href="zasady.html">📘 Zobacz zasady gry w koszykówkę</a>
+  <a href="animacje.html">🏀 Zobacz animacje z piłką</a>
+  <a href="extra.html">🎶 Quiz, muzyka i licznik punktów</a>
+  <a href="quiz.html">🧠 Wielki quiz o koszykówce</a>
+  <a href="gra.html">🎮 Zagraj w rzut do kosza!</a>
+  <a href="pilka.html">📷 Zobacz zdjęcie piłki</a>
+
+  <footer>
+    © 2022 Natalia
+  </footer>
+
+  <script>
+    function zmienTlo() {
+      const kolory = ["#f0f0f0", "#d4f1f9", "#ffe4e1", "#e6ffe6", "#fff0b3"];
+      const losowyKolor = kolory[Math.floor(Math.random() * kolory.length)];
+      document.body.style.backgroundColor = losowyKolor;
+    }
+  </script>
+
+</body>
+</html>

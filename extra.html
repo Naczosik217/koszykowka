@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Muzyka i Licznik 🏀</title>
+  <style>
+    body {
+      background-color: #fffce6;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      color: orange;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ffaa00;
+    }
+
+    #punkty {
+      font-size: 24px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    audio {
+      margin-top: 30px;
+    }
+
+    a {
+      display: block;
+      margin-top: 40px;
+      font-size: 18px;
+      text-decoration: none;
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎶 Muzyka + Licznik punktów ⛹️‍♀️</h1>
+
+  <!-- 🎵 Muzyka -->
+  <p><strong>Włącz muzykę w tle:</strong></p>
+  <audio controls autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-hey.mp3" type="audio/mpeg">
+    Twoja przeglądarka nie obsługuje odtwarzacza audio.
+  </audio>
+
+  <!-- 🧮 Licznik punktów -->
+  <div id="licznik">
+    <h2>Licznik punktów</h2>
+    <p>Dodawaj punkty dla swojej drużyny!</p>
+    <div id="punkty">0</div>
+    <button onclick="dodajPunkty(1)">+1 punkt</button>
+    <button onclick="dodajPunkty(2)">+2 punkty</button>
+    <button onclick="dodajPunkty(3)">+3 punkty</button>
+    <button onclick="resetujPunkty()">Resetuj</button>
+  </div>
+
+  <!-- 🔗 Link do nowego quizu -->
+  <a href="quiz.html">🧠 Przejdź do dużego quizu o koszykówce</a>
+  <a href="index.html">⬅️ Wróć na stronę główną</a>
+
+  <script>
+    // 🧮 LICZNIK
+    let punkty = 0;
+
+    function dodajPunkty(ile) {
+      punkty += ile;
+      document.getElementById("punkty").innerText = punkty;
+    }
+
+    function resetujPunkty() {
+      punkty = 0;
+      document.getElementById("punkty").innerText = punkty;
+    }
+  </script>
+
+</body>
+</html>

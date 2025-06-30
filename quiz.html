@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz o Koszykówce 🧠</title>
+  <style>
+    body {
+      background-color: #fffce6;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      color: orange;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ffaa00;
+    }
+
+    #koniecQuizu button {
+      margin-top: 10px;
+    }
+
+    .pytanie {
+      font-size: 22px;
+      margin: 20px 0;
+    }
+
+    #koniecQuizu {
+      display: none;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Wielki quiz o koszykówce!</h1>
+
+  <div id="quiz">
+    <div id="pytanie" class="pytanie"></div>
+    <div id="odpowiedzi"></div>
+  </div>
+
+  <div id="koniecQuizu">
+    <p style="font-size: 24px; color: green;">🎉 Jesteś mistrzem!</p>
+    <button onclick="location.reload()">🔁 Spróbuj jeszcze raz</button>
+    <br><br>
+    <a href="index.html">
+      <button>🏠 Wróć na stronę główną</button>
+    </a>
+  </div>
+
+  <script>
+    const pytania = [
+      {
+        pytanie: "Ile punktów zdobywa się za rzut za 3?",
+        odpowiedzi: ["1", "2", "3"],
+        poprawna: 2
+      },
+      {
+        pytanie: "Ile osób gra w jednej drużynie na boisku?",
+        odpowiedzi: ["4", "5", "6"],
+        poprawna: 1
+      },
+      {
+        pytanie: "Jak się nazywa najlepsza liga koszykarska?",
+        odpowiedzi: ["NBA", "FIFA", "F1"],
+        poprawna: 0
+      },
+      {
+        pytanie: "Z którego kraju pochodzi koszykówka?",
+        odpowiedzi: ["USA", "Hiszpania", "Brazylia"],
+        poprawna: 0
+      },
+      {
+        pytanie: "Czym jest „slam dunk”?",
+        odpowiedzi: ["Rzut z połowy", "Wsad", "Faul"],
+        poprawna: 1
+      },
+      {
+        pytanie: "Jak nazywa się piłka do koszykówki po angielsku?",
+        odpowiedzi: ["Basketball", "Footvolley", "Netball"],
+        poprawna: 0
+      },
+      {
+        pytanie: "Jak nazywa się linia za 3 punkty?",
+        odpowiedzi: ["Linia środkowa", "Linia końcowa", "Linia rzutów za 3"],
+        poprawna: 2
+      },
+      {
+        pytanie: "Ile punktów daje wsad?",
+        odpowiedzi: ["3", "2", "1"],
+        poprawna: 1
+      },
+      {
+        pytanie: "Jak się nazywa osoba prowadząca piłkę?",
+        odpowiedzi: ["Napastnik", "Rozgrywający", "Obrońca"],
+        poprawna: 1
+      },
+      {
+        pytanie: "Jaki kolor ma najczęściej piłka do koszykówki?",
+        odpowiedzi: ["Pomarańczowy", "Czarny", "Czerwony"],
+        poprawna: 0
+      }
+    ];
+
+    let pytanieIndex = 0;
+
+    function pokazPytanie() {
+      const quiz = document.getElementById("quiz");
+      const pytanieElem = document.getElementById("pytanie");
+      const odpowiedziElem = document.getElementById("odpowiedzi");
+
+      if (pytanieIndex >= pytania.length) {
+        quiz.style.display = "none";
+        document.getElementById("koniecQuizu").style.display = "block";
+        return;
+      }
+
+      const obecne = pytania[pytanieIndex];
+      pytanieElem.innerText = obecne.pytanie;
+      odpowiedziElem.innerHTML = "";
+
+      obecne.odpowiedzi.forEach((odpowiedz, index) => {
+        const btn = document.createElement("button");
+        btn.innerText = odpowiedz;
+        btn.onclick = () => sprawdzOdpowiedz(index);
+        odpowiedziElem.appendChild(btn);
+      });
+    }
+
+    function sprawdzOdpowiedz(index) {
+      const poprawna = pytania[pytanieIndex].poprawna;
+      if (index === poprawna) {
+        pytanieIndex++;
+        pokazPytanie();
+      } else {
+        alert("❌ Zła odpowiedź! Spróbuj jeszcze raz.");
+      }
+    }
+
+    pokazPytanie();
+  </script>
+
+</body>
+</html>

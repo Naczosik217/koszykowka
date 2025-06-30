@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Galeria Koszykarska</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #f0f8ff;
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff6600;
+      font-size: 36px;
+      margin: 20px;
+    }
+
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .galeria img {
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .galeria img:hover {
+      transform: scale(1.05);
+    }
+
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .popup img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 0 20px black;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .popup button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ffd966;
+      cursor: pointer;
+    }
+
+    .popup button:hover {
+      background-color: #ffcc33;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🏀 Galeria Koszykarska</h1>
+
+  <div class="galeria">
+    <img src="kosz.png" alt="Kosz">
+    <img src="pilka.png" alt="Piłka">
+    <img src="lebron.png" alt="LeBron James">
+    <img src="zachod.png" alt="Boisko przy zachodzie słońca">
+    <img src="fioletowy.png" alt="Fioletowa piłka i boisko">
+  </div>
+
+  <!-- Powiększenie -->
+  <div class="popup" id="popup">
+    <span class="close" onclick="zamknijPopup()">&times;</span>
+    <img id="powiekszoneZdjecie" src="" alt="Powiększone zdjęcie">
+    <a id="pobierzLink" href="#" download>
+      <button>Pobierz zdjęcie</button>
+    </a>
+  </div>
+
+  <script>
+    const wszystkieZdjecia = document.querySelectorAll('.galeria img');
+    const popup = document.getElementById('popup');
+    const powiekszone = document.getElementById('powiekszoneZdjecie');
+    const pobierzLink = document.getElementById('pobierzLink');
+
+    wszystkieZdjecia.forEach(img => {
+      img.addEventListener('click', () => {
+        powiekszone.src = img.src;
+        pobierzLink.href = img.src;
+        popup.style.display = 'flex';
+      });
+    });
+
+    function zamknijPopup() {
+      popup.style.display = 'none';
+      powiekszone.src = "";
+      pobierzLink.href = "#";
+    }
+  </script>
+
+</body>
+</html>

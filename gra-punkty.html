@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Gra: Rzut do Kosza 🏀</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #cce6ff, #ffffff);
+      font-family: 'Comic Sans MS', sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin: 20px;
+      color: #ff6600;
+      font-size: 36px;
+    }
+
+    .boisko {
+      position: relative;
+      width: 100vw;
+      height: 70vh;
+      background-color: #e0ffe0;
+      border-top: 4px solid green;
+    }
+
+    .kosz {
+      position: absolute;
+      top: 60px;
+      right: 80px;
+      width: 100px;
+      height: 20px;
+      background: red;
+      border-radius: 0 0 50px 50px;
+      z-index: 2;
+    }
+
+    .siatka {
+      width: 60px;
+      height: 40px;
+      background: repeating-linear-gradient(
+        45deg,
+        white,
+        white 2px,
+        transparent 2px,
+        transparent 6px
+      );
+      margin: 0 auto;
+      border-bottom: 2px solid gray;
+    }
+
+    .pilka {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: orange;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 4px #b85c00;
+      left: 100px;
+      bottom: 80px;
+      transition: all 0.6s ease-in-out;
+    }
+
+    .panel {
+      margin-top: 30px;
+      font-size: 22px;
+    }
+
+    .przycisk {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    .przycisk:hover {
+      background-color: #ffaa00;
+    }
+
+    .koniec {
+      font-size: 30px;
+      color: green;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 Rzut do kosza na punkty!</h1>
+
+  <div class="boisko" onclick="rzut()">
+    <div class="kosz">
+      <div class="siatka"></div>
+    </div>
+    <div class="pilka" id="pilka"></div>
+  </div>
+
+  <div class="panel">
+    <div>Punkty: <span id="punkty">0</span></div>
+    <div>Czas: <span id="czas">30</span> sekund</div>
+    <button class="przycisk" onclick="start()">▶️ Start</button>
+  </div>
+
+  <div class="koniec" id="koniec">⏰ KONIEC GRY!<br>Twój wynik: <span id="finalnyWynik"></span> punktów</div>
+
+  <script>
+    let punkty = 0;
+    let czas = 30;
+    let timer;
+    let graTrwa = false;
+
+    const pilka = document.getElementById("pilka");
+    const koszX = window.innerWidth - 130;
+    const koszY = 100;
+
+    function start() {
+      punkty = 0;
+      czas = 30;
+      graTrwa = true;
+      document.getElementById("punkty").innerText = punkty;
+      document.getElementById("czas").innerText = czas;
+      document.getElementById("koniec").style.display = "none";
+      pilka.style.left = "100px";
+      pilka.style.bottom = "80px";
+
+      timer = setInterval(() => {
+        czas--;
+        document.getElementById("czas").innerText = czas;
+        if (czas === 0) {
+          clearInterval(timer);
+          graTrwa = false;
+          document.getElementById("koniec").style.display = "block";
+          document.getElementById("finalnyWynik").innerText = punkty;
+        }
+      }, 1000);
+    }
+
+    function rzut() {
+      if (!graTrwa) return;
+
+      let x = koszX;
+      let y = koszY;
+
+      // animuj piłkę
+      pilka.style.left = x + "px";
+      pilka.style.bottom = y + "px";
+
+      // sprawdź trafienie
+      setTimeout(() => {
+        punkty++;
+        document.getElementById("punkty").innerText = punkty;
+
+        // wróć piłkę na miejsce
+        pilka.style.left = "100px";
+        pilka.style.bottom = "80px";
+      }, 600);
+    }
+  </script>
+
+</body>
+</html>
