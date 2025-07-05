@@ -1,237 +1,99 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Gra z Wyborem Trudności</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background-color: #f0f8ff;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+<script>
+  const canvas = document.getElementById("graCanvas");
+  const ctx = canvas.getContext("2d");
+
+  let isDrawing = false;
+  let path = [];
+  let pilka = { x: 200, y: 550, r: 10, flying: false, index: 0 };
+  let punkty = 0;
+
+  let kosz = { x: 160, y: 100, w: 80, h: 20, dx: 0 };
+
+  const wyborPoziomu = document.getElementById("wyborPoziomu");
+
+  function ustawTrudnosc() {
+    const poziom = wyborPoziomu.value;
+    if (poziom === "latwy") {
+      kosz.dx = 0;
+    } else if (poziom === "sredni") {
+      kosz.dx = 1.2;
+    } else if (poziom === "trudny") {
+      kosz.dx = 2.5;
     }
+  }
 
-    canvas {
-      display: block;
-      background-color: #d9f9ff;
+  wyborPoziomu.addEventListener("change", ustawTrudnosc);
+  ustawTrudnosc();
+
+  function drawKosz() {
+    // ... (twój kod kosza się nie zmienia)
+  }
+
+  function drawPilka() {
+    // ... (twój kod piłki się nie zmienia)
+  }
+
+  function drawPath() {
+    // ... (twój kod rysowania się nie zmienia)
+  }
+
+  canvas.addEventListener("mousedown", (e) => {
+    if (pilka.flying) return;
+    path = [];
+    isDrawing = true;
+    const rect = canvas.getBoundingClientRect();
+    path.push({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  });
+
+  canvas.addEventListener("mousemove", (e) => {
+    if (!isDrawing) return;
+    const rect = canvas.getBoundingClientRect();
+    path.push({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  });
+
+  canvas.addEventListener("mouseup", () => {
+    if (path.length > 1) {
+      isDrawing = false;
+      pilka.flying = true;
+      pilka.index = 0;
     }
+  });
 
-    #punkty {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: white;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 20px;
-      font-weight: bold;
-      color: #333;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  // 📱 DODANE: Obsługa dotyku (działa na telefonie!)
+  canvas.addEventListener("touchstart", e => {
+    if (pilka.flying) return;
+    path = [];
+    isDrawing = true;
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches[0];
+    path.push({ x: t.clientX - rect.left, y: t.clientY - rect.top });
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener("touchmove", e => {
+    if (!isDrawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches[0];
+    path.push({ x: t.clientX - rect.left, y: t.clientY - rect.top });
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener("touchend", e => {
+    if (path.length > 1) {
+      isDrawing = false;
+      pilka.flying = true;
+      pilka.index = 0;
     }
+    e.preventDefault();
+  }, { passive: false });
 
-    #poziom {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #ffffffee;
-      padding: 15px 30px;
-      border-radius: 15px;
-      font-size: 20px;
-      font-weight: bold;
-      color: #222;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
-      border: 2px solid #ffaa00;
-    }
+  function sprawdzCzyWpadla() {
+    // ... (twój kod bez zmian)
+  }
 
-    #wyborPoziomu {
-      font-size: 18px;
-      margin-left: 10px;
-      padding: 5px 15px;
-      border-radius: 10px;
-      border: 2px solid #ffa500;
-      background-color: #fff3d1;
-      cursor: pointer;
-    }
+  function update() {
+    // ... (twój kod bez zmian)
+  }
 
-    #wyborPoziomu:hover {
-      background-color: #ffe6a1;
-    }
-  </style>
-</head>
-<body>
-  <div id="punkty">Punkty: 0</div>
-  <div id="poziom">
-    🧠 Poziom trudności:
-    <select id="wyborPoziomu">
-      <option value="latwy">🌱 Łatwy</option>
-      <option value="sredni">🏃 Średni</option>
-      <option value="trudny">🔥 Trudny</option>
-    </select>
-  </div>
-
-  <canvas id="graCanvas" width="400" height="600"></canvas>
-
-  <script>
-    const canvas = document.getElementById("graCanvas");
-    const ctx = canvas.getContext("2d");
-
-    let isDrawing = false;
-    let path = [];
-    let pilka = { x: 200, y: 550, r: 10, flying: false, index: 0 };
-    let punkty = 0;
-
-    let kosz = { x: 160, y: 100, w: 80, h: 20, dx: 0 };
-
-    const wyborPoziomu = document.getElementById("wyborPoziomu");
-
-    function ustawTrudnosc() {
-      const poziom = wyborPoziomu.value;
-      if (poziom === "latwy") {
-        kosz.dx = 0;
-      } else if (poziom === "sredni") {
-        kosz.dx = 1.2;
-      } else if (poziom === "trudny") {
-        kosz.dx = 2.5;
-      }
-    }
-
-    wyborPoziomu.addEventListener("change", ustawTrudnosc);
-    ustawTrudnosc();
-
-    function drawKosz() {
-      // 🔴 Obręcz
-      ctx.beginPath();
-      ctx.strokeStyle = "red";
-      ctx.lineWidth = 6;
-      ctx.arc(kosz.x + kosz.w / 2, kosz.y + 10, kosz.w / 2, 0, Math.PI, false);
-      ctx.stroke();
-
-      // 🕸️ Siatka pod obręczą
-      const startX = kosz.x + 10;
-      const endX = kosz.x + kosz.w - 10;
-      const siatkaY = kosz.y + 10;
-      ctx.strokeStyle = "#ccc";
-      ctx.lineWidth = 1;
-      for (let i = 0; i <= 5; i++) {
-        ctx.beginPath();
-        ctx.moveTo(startX + i * ((endX - startX) / 5), siatkaY);
-        ctx.lineTo(kosz.x + kosz.w / 2, siatkaY + 25);
-        ctx.stroke();
-      }
-
-      // 🔳 Dolna linia siatki
-      ctx.beginPath();
-      ctx.moveTo(kosz.x + 10, siatkaY + 25);
-      ctx.lineTo(kosz.x + kosz.w - 10, siatkaY + 25);
-      ctx.stroke();
-
-      // 🔵 Cel w środku obręczy (pulsujący)
-      ctx.beginPath();
-      const puls = 8 + Math.sin(Date.now() / 300) * 2;
-      ctx.arc(kosz.x + kosz.w / 2, kosz.y + 10, puls, 0, Math.PI * 2);
-      ctx.fillStyle = "deepskyblue";
-      ctx.fill();
-
-      // 📝 Tekst: Traf tutaj!
-      ctx.font = "bold 14px Arial";
-      ctx.fillStyle = "#333";
-      ctx.textAlign = "center";
-      ctx.fillText("Traf tutaj!", kosz.x + kosz.w / 2, kosz.y - 10);
-    }
-
-    function drawPilka() {
-      ctx.beginPath();
-      ctx.arc(pilka.x, pilka.y, pilka.r, 0, Math.PI * 2);
-      ctx.fillStyle = "orange";
-      ctx.fill();
-      ctx.strokeStyle = "#b85c00";
-      ctx.lineWidth = 3;
-      ctx.stroke();
-    }
-
-    function drawPath() {
-      if (path.length < 2) return;
-      ctx.beginPath();
-      ctx.moveTo(path[0].x, path[0].y);
-      for (let i = 1; i < path.length; i++) {
-        ctx.lineTo(path[i].x, path[i].y);
-      }
-      ctx.strokeStyle = "blue";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    }
-
-    canvas.addEventListener("mousedown", (e) => {
-      if (pilka.flying) return;
-      path = [];
-      isDrawing = true;
-      const rect = canvas.getBoundingClientRect();
-      path.push({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-    });
-
-    canvas.addEventListener("mousemove", (e) => {
-      if (!isDrawing) return;
-      const rect = canvas.getBoundingClientRect();
-      path.push({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-    });
-
-    canvas.addEventListener("mouseup", () => {
-      if (path.length > 1) {
-        isDrawing = false;
-        pilka.flying = true;
-        pilka.index = 0;
-      }
-    });
-
-    function sprawdzCzyWpadla() {
-      const px = pilka.x;
-      const py = pilka.y;
-      return (
-        px > kosz.x &&
-        px < kosz.x + kosz.w &&
-        py > kosz.y &&
-        py < kosz.y + kosz.h
-      );
-    }
-
-    function update() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // ruch kosza
-      kosz.x += kosz.dx;
-      if (kosz.x < 0 || kosz.x + kosz.w > canvas.width) {
-        kosz.dx *= -1;
-      }
-
-      drawKosz();
-      drawPath();
-
-      if (pilka.flying && path.length > 1) {
-        if (pilka.index < path.length) {
-          pilka.x = path[pilka.index].x;
-          pilka.y = path[pilka.index].y;
-          pilka.index++;
-        } else {
-          pilka.flying = false;
-          if (sprawdzCzyWpadla()) {
-            punkty++;
-            document.getElementById("punkty").textContent = "Punkty: " + punkty;
-            alert("🎯 TRAFIONY!");
-          } else {
-            alert("❌ Nie trafiłeś. Spróbuj jeszcze raz!");
-          }
-          pilka.x = 200;
-          pilka.y = 550;
-          path = [];
-        }
-      }
-
-      drawPilka();
-      requestAnimationFrame(update);
-    }
-
-    update();
-  </script>
-</body>
-</html>
+  update();
+</script>
